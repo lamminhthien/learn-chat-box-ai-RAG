@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    container_name: chatbox-backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - vectordb
+      - postgres
+      - ollama
+    environment:
+      - DATABASE_URL=postgresql://chatuser:123456@postgres:5432/chatbox_ai
+      - VECTORDB_URL=http://vectordb:6333
+      - OLLAMA_URL=http://ollama:11434
+    networks:
+      - chatbox-network
+
+  vectordb:
+    image: qdrant/qdrant
+    container_name: chatbox-vectordb
+    ports:
+      - "6333:6333"
+    networks:
+      - chatbox-network
+
+  postgres:
+    image: postgres:16
+    container_name: chatbox-postgres
+    environment:
+      POSTGRES_DB: chatbox_ai
+      POSTGRES_USER: chatuser
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - chatbox-network
+
+  ollama:
+    image: ollama/ollama
+    container_name: chatbox-ollama
+    ports:
+      - "11434:11434"
+    networks:
+      - chatbox-network
+
+volumes:
+  postgres-data:
+
+networks:
+  chatbox-network:
+    driver: bridge
