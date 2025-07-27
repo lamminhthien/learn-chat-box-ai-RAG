@@ -3,12 +3,12 @@ from dateparser import parse as parse_date
 
 def detect_intent_and_entities(text: str):
     """
-    Phát hiện intent đặt lịch, trích xuất title và datetime từ text tiếng Việt.
+    Detect scheduling intent, extract title and datetime from Vietnamese text.
     """
-    # intent đặt lịch
-    match = re.search(r'(đặt|tạo|thêm)\s*(lịch|sự kiện|cuộc họp)?\s*(.+)?\s*lúc\s+(.+)', text, re.IGNORECASE)
+    # Schedule creation intent
+    match = re.search(r'(schedule|create|add)\s*(event|meeting|appointment)?\s*(.+)?\s*at\s+(.+)', text, re.IGNORECASE)
     if match:
-        title = match.group(3) or 'Sự kiện'
+        title = match.group(3) or 'Event'
         time_str = match.group(4)
         dt = parse_date(time_str, languages=['vi'])
         if dt:
@@ -17,19 +17,19 @@ def detect_intent_and_entities(text: str):
                 'title': title.strip(),
                 'datetime': dt.isoformat()
             }
-    # intent hỏi ghi chú
-    if 'ghi chú' in text.lower():
+    # Note inquiry intent
+    if 'note' in text.lower():
         return {'intent': 'ask_notes'}
-    # intent hỏi lịch
-    if 'lịch' in text.lower() or 'sự kiện' in text.lower():
+    # Schedule inquiry intent
+    if 'schedule' in text.lower() or 'event' in text.lower():
         return {'intent': 'ask_events'}
-    # intent chào hỏi
-    if any(x in text.lower() for x in ['xin chào', 'chào', 'hello', 'hi']):
+    # Greeting intent
+    if any(x in text.lower() for x in ['hello', 'hi', 'greetings']):
         return {'intent': 'greeting'}
-    # intent hỏi tên
-    if 'tên' in text.lower():
+    # Name inquiry intent
+    if 'name' in text.lower():
         return {'intent': 'ask_name'}
-    # intent hỏi thời tiết
-    if 'thời tiết' in text.lower():
+    # Weather inquiry intent
+    if 'weather' in text.lower():
         return {'intent': 'ask_weather'}
     return {'intent': 'chat'} 
