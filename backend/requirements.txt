@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+sqlmodel
+apscheduler
+dateparser
+google-auth
+nltk==3.9.1  # Or the latest version
+python-dotenv==1.0.1
+qdrant_client
+sentence_transformers
+python-docx
+requests
+PyPDF2
+psycopg2-binary
+python-multipart
