@@ -6,6 +6,10 @@
 
 ## Setup
 
+# Prepare Google Gemini API Key
+https://ai.google.dev/gemini-api/docs/api-key
+
+
 # Install vectordb (qdrant) and database (postgres)
 ```bash
 docker-compose up -d vectordb
