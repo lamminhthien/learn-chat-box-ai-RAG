@@ -11,12 +11,13 @@ function renderChat() {
     chatbox.innerHTML = '';
     chatHistory.forEach((msg, idx) => {
         const div = document.createElement('div');
-        div.className = `chat-bubble ${msg.sender}`;
+        div.className = `chat-bubble flex items-start space-x-2 p-3 rounded-lg mb-2 max-w-[80%] ${
+            msg.sender === 'user' ? 'ml-auto bg-blue-100 text-gray-900' : 'mr-auto bg-gray-200 text-gray-900'
+        }`;
         if (msg.sender === 'user') {
-            div.innerHTML = `<span class="avatar">👤</span><span>${msg.text}</span>`;
+            div.innerHTML = `<span class="avatar text-2xl">👤</span><span class="flex-1">${msg.text}</span>`;
         } else {
-            div.innerHTML = `<span class="avatar">🤖</span><span>${msg.text}</span>` +
-                `<button class="tts-btn" title="Đọc" onclick="speakText(\`${msg.text.replace(/`/g, '\`')}\`)">🔊</button>`;
+            div.innerHTML = `<span class="avatar text-2xl">🤖</span><span class="flex-1">${msg.text}</span>`;
         }
         chatbox.appendChild(div);
     });

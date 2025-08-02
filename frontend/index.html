@@ -15,7 +15,7 @@
             font-family: 'Inter', sans-serif;
         }
         #chatbox {
-            height: calc(100vh - 160px); /* Chiếm toàn bộ chiều cao trừ header và form */
+            height: calc(100vh - 112px); /* Adjust height to account for header and fixed form */
         }
     </style>
 </head>
@@ -28,26 +28,26 @@
                     <h1 class="text-3xl font-semibold text-gray-800">IAMBOX</h1>
                 </div>
                 <div id="chatbox" class="flex-1 overflow-y-auto bg-gray-50 p-4"></div>
-                <!-- Chat Form -->
-                <form id="chat-form" class="flex items-center space-x-2 p-4 bg-white border-t border-gray-200">
-                    <label for="file-input" class="cursor-pointer p-2 hover:bg-gray-200 rounded-md" title="Đính kèm file">
-                        <svg width="24" height="24" fill="none" stroke="#00bcd4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-8.49 8.49a5 5 0 01-7.07-7.07l8.49-8.49a3 3 0 014.24 4.24l-8.49 8.49a1 1 0 01-1.41-1.41l8.49-8.49"/></svg>
-                        <input type="file" id="file-input" name="file" accept=".txt,.pdf,.docx" class="hidden" />
-                    </label>
-                    <input type="text" id="chat-input" placeholder="Ask anything..." autocomplete="off" required class="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <button type="submit" class="p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors" title="Gửi">
-                        <svg width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
-                    </button>
-                </form>
-                <!-- Schedule Form -->
-                <form id="schedule-form" class="p-4 bg-white border-t border-gray-200 hidden">
-                    <div class="text-lg font-semibold text-gray-800 mb-4">Đặt lịch hẹn mới</div>
-                    <input type="text" id="event-title" placeholder="Tên sự kiện" required class="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <input type="datetime-local" id="event-datetime" required class="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <button type="submit" class="w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">Tạo lịch hẹn</button>
-                </form>
             </div>
         </main>
+        <!-- Chat Form -->
+        <form id="chat-form" class="fixed bottom-0 left-0 right-0 flex items-center space-x-2 p-4 bg-white border-t border-gray-200 z-10">
+            <label for="file-input" class="cursor-pointer p-2 hover:bg-gray-200 rounded-md" title="Đính kèm file">
+                <svg width="24" height="24" fill="none" stroke="#00bcd4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-8.49 8.49a5 5 0 01-7.07-7.07l8.49-8.49a3 3 0 014.24 4.24l-8.49 8.49a1 1 0 01-1.41-1.41l8.49-8.49"/></svg>
+                <input type="file" id="file-input" name="file" accept=".txt,.pdf,.docx" class="hidden" />
+            </label>
+            <input type="text" id="chat-input" placeholder="Ask anything..." autocomplete="off" required class="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button type="submit" class="p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors" title="Gửi">
+                <svg width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+            </button>
+        </form>
+        <!-- Schedule Form -->
+        <form id="schedule-form" class="p-4 bg-white border-t border-gray-200 hidden">
+            <div class="text-lg font-semibold text-gray-800 mb-4">Đặt lịch hẹn mới</div>
+            <input type="text" id="event-title" placeholder="Tên sự kiện" required class="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="datetime-local" id="event-datetime" required class="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button type="submit" class="w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">Tạo lịch hẹn</button>
+        </form>
     </div>
     <audio id="reminder-audio" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae6b6.mp3" preload="auto"></audio>
     <script src="app.js"></script>
