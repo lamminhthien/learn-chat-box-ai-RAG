@@ -236,39 +236,16 @@ async def ask_question(payload: dict):
         context = "\n".join([hit.payload["text"] for hit in hits])
         prompt = f"Dựa trên các đoạn sau, hãy trả lời câu hỏi một cách chính xác và ngắn gọn nhất.\n{context}\nCâu hỏi: {question}\nTrả lời:"
 
-        # # Query the language model using Ollama
-        # res = requests.post(
-        #     "http://localhost:11434/api/generate",
-        #     json={"model": "llama3", "prompt": prompt},
-        #     stream=True
-        # )
-        # res.raise_for_status()
-
-        # # Process streaming response
-        # answer = ""
-        # for line in res.iter_lines():
-        #     if line:
-        #         try:
-        #             json_line = json.loads(line.decode("utf-8"))
-        #             if "response" in json_line:
-        #                 answer += json_line["response"]
-        #             if json_line.get("done", False):
-        #                 break
-        #         except json.JSONDecodeError:
-        #             logger.warning(f"Invalid JSON line in response: {line}")
-        #             continue
-
-        # # Save Q&A as a note if there's an answer
-        # if answer.strip():
-        #     try:
-        #         note_text = f"Q: {question}\nA: {answer}"
-        #         create_note(note_text)
-        #     except Exception as e:
-        #         logger.error(f"Error saving note: {e}")
-
         # return {"reply": answer.strip() or "Không tạo được câu trả lời từ tài liệu."}
         api_key = os.getenv("GEMINI_API_KEY")
         result = query_gemini_api(prompt, api_key)
+        # Save Q&A as a note if there's an answer
+        if result["reply"]:
+            try:
+                note_text = f"Q: {prompt}\nA: {result['reply']}"
+                create_note(note_text)
+            except Exception as e:
+                logger.error(f"Error saving note: {e}")
         return {"reply": result["reply"]}
 
     except Exception as e:

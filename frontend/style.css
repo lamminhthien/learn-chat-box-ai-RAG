@@ -97,6 +97,7 @@ body {
     padding: 8px 16px;
     gap: 8px;
     margin-bottom: 12px;
+    scroll-behavior: smooth;
 }
 #chat-input {
     flex: 1;
