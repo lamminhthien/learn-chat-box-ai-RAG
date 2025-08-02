@@ -227,6 +227,7 @@ async def ask_question(payload: dict):
             query_vector=(VECTOR_NAME, q_vector),  # Use correct vector name
             limit=5
         )
+        logger.info(f"Found {len(hits)} relevant chunks for question: {question}")
         if not hits:
             logger.info(f"No relevant chunks found for question: {question}")
             return {"reply": "Không tìm thấy thông tin liên quan trong tài liệu."}
@@ -267,7 +268,7 @@ async def ask_question(payload: dict):
 
         # return {"reply": answer.strip() or "Không tạo được câu trả lời từ tài liệu."}
         api_key = os.getenv("GEMINI_API_KEY")
-        result = query_gemini_api(question, api_key)
+        result = query_gemini_api(prompt, api_key)
         return {"reply": result["reply"]}
 
     except Exception as e:
