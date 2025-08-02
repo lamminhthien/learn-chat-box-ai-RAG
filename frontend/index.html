@@ -4,47 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbox AI</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Tích hợp Tailwind CSS qua CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        #chatbox {
+            height: calc(100vh - 160px); /* Chiếm toàn bộ chiều cao trừ header và form */
+        }
+    </style>
 </head>
-<body>
-    <div class="perplexity-layout">
-        <aside class="sidebar">
-            <div class="sidebar-logo">
-                <!-- Đã xóa SVG logo và chữ ollama ở đây -->
-            </div>
-            <nav class="sidebar-menu">
-                <button class="sidebar-icon active" title="Home" id="sidebar-home">
-                    <svg width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
-                </button>
-            </nav>
-            <div class="sidebar-bottom">
-                <div id="user-info">
-                    <!-- Đã xóa nút Đăng nhập bằng Google ở đây -->
+<body class="bg-gray-100 text-gray-900">
+    <div class="flex flex-col h-screen">
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col">
+            <div class="flex flex-col h-full bg-white">
+                <div class="text-center py-4 border-b border-gray-200">
+                    <h1 class="text-3xl font-semibold text-gray-800">IAMBOX</h1>
                 </div>
-            </div>
-        </aside>
-        <main class="main-content">
-            <div class="center-content" id="center-content">
-                <div class="logo-text">IAMBOX</div>
-                <div id="chatbox" class="chatbox"></div>
-                <form id="chat-form" class="chat-form">
-                    <label for="file-input" class="attach-btn" title="Đính kèm file">
-                      <svg width="24" height="24" fill="none" stroke="#00bcd4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-8.49 8.49a5 5 0 01-7.07-7.07l8.49-8.49a3 3 0 014.24 4.24l-8.49 8.49a1 1 0 01-1.41-1.41l8.49-8.49"/></svg>
-                      <input type="file" id="file-input" name="file" accept=".txt,.pdf,.docx" style="display:none;" />
+                <div id="chatbox" class="flex-1 overflow-y-auto bg-gray-50 p-4"></div>
+                <!-- Chat Form -->
+                <form id="chat-form" class="flex items-center space-x-2 p-4 bg-white border-t border-gray-200">
+                    <label for="file-input" class="cursor-pointer p-2 hover:bg-gray-200 rounded-md" title="Đính kèm file">
+                        <svg width="24" height="24" fill="none" stroke="#00bcd4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-8.49 8.49a5 5 0 01-7.07-7.07l8.49-8.49a3 3 0 014.24 4.24l-8.49 8.49a1 1 0 01-1.41-1.41l8.49-8.49"/></svg>
+                        <input type="file" id="file-input" name="file" accept=".txt,.pdf,.docx" class="hidden" />
                     </label>
-                    <input type="text" id="chat-input" placeholder="Ask anything..." autocomplete="off" required>
-                    <button type="submit" class="send-btn" title="Gửi">
-                      <svg width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+                    <input type="text" id="chat-input" placeholder="Ask anything..." autocomplete="off" required class="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button type="submit" class="p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors" title="Gửi">
+                        <svg width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
                     </button>
                 </form>
-                <form id="schedule-form" class="schedule-form" style="display:none;">
-                    <div class="form-title">Đặt lịch hẹn mới</div>
-                    <input type="text" id="event-title" placeholder="Tên sự kiện" required>
-                    <input type="datetime-local" id="event-datetime" required>
-                    <button type="submit" class="send-btn" style="width:100%;margin-top:12px;">Tạo lịch hẹn</button>
+                <!-- Schedule Form -->
+                <form id="schedule-form" class="p-4 bg-white border-t border-gray-200 hidden">
+                    <div class="text-lg font-semibold text-gray-800 mb-4">Đặt lịch hẹn mới</div>
+                    <input type="text" id="event-title" placeholder="Tên sự kiện" required class="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="datetime-local" id="event-datetime" required class="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button type="submit" class="w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">Tạo lịch hẹn</button>
                 </form>
             </div>
         </main>
