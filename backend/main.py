@@ -97,7 +97,7 @@ model = SentenceTransformer(MODEL_NAME)
 # Initialize FastAPI logger
 logger = logging.getLogger("fastapi")  # Use FastAPI's logger
 
-COLLECTION_NAME = os.getenv("QDRANT_COLLECTION", "documents_v2")
+COLLECTION_NAME = os.getenv("QDRANT_COLLECTION", "documents_v6")
 VECTOR_SIZE = int(os.getenv("VECTOR_SIZE", 384))
 VECTOR_NAME = os.getenv("VECTOR_NAME", "vector")  # Explicit vector name for Qdrant
 from qdrant_client.models import VectorParams, Distance
